@@ -1,0 +1,135 @@
+/* Variable declaration for color palette */
+:root {
+  --first-bg-color: #43bdd9;
+  --second-bg-color: #9bf2ea;
+  --main-bg-color: rgb(201, 212, 214);
+  --main-text-color: rgb(29, 41, 60);
+  --secondary-text-color: rgb(29, 74, 123);
+}
+
+main {
+  min-height: 100vh;
+  background: linear-gradient(
+    to right top,
+    var(--first-bg-color),
+    var(--second-bg-color)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glass {
+  background: var(--main-bg-color);
+  min-height: 80vh;
+  width: 60%;
+  background: rgba(201, 212, 214, 0.7);
+  border: white;
+  border-style: solid;
+  border-radius: 2rem;
+}
+
+nav {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+
+  background: #11538c;
+  border-bottom: solid white;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+}
+
+nav li {
+  list-style: none;
+  font-size: 2vw;
+  display: inline;
+  margin: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(20, 40px);
+  grid-template-rows: repeat(auto-fill, 40px);
+}
+
+.cell {
+  border: white 1px solid;
+  outline: 1px solid black;
+  outline-offset: -2px;
+  background-color: white;
+  aspect-ratio: 1;
+}
+
+.cell-visited {
+  animation-name: visitedAnimation;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes visitedAnimation {
+  0% {
+    transform: scale(0.5);
+    background-color: rgba(0, 0, 66, 0.75);
+    border-radius: 100%;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: rgba(0, 190, 218, 0.75);
+  }
+}
+
+.cell-shortestpath {
+  animation-name: shortestPath;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes shortestPath {
+  0% {
+    transform: scale(0.5);
+    background-color: rgb(255, 254, 106);
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: rgb(255, 254, 106);
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: rgb(255, 254, 106);
+  }
+}
+
+.cell .cell-start {
+  color: green;
+}
+
+.cell .cell-finish {
+  color: red;
+}
