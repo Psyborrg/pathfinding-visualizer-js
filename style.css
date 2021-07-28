@@ -62,8 +62,8 @@ a:hover {
 #grid {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(20, 40px);
-  grid-template-rows: repeat(auto-fill, 40px);
+  grid-template-columns: repeat(40, 20px);
+  grid-template-rows: repeat(auto-fill, 20px);
 }
 
 .cell {
