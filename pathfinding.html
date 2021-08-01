@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Document</title>
+    <script type="text/javascript" src="pathfinding.js"></script>
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>Dijkstras</h1>
+    </header>
+    <section class="control-bar">
+      <button type="button" id="reset-button" onclick="resetBoard()">
+        Reset
+      </button>
+      <button type="button" id="maze-button" onclick="generateWalls()">
+        Generate Maze
+      </button>
+      <select name="algorithms" id="algorithms">
+        <option value="Breadth-First Search">Breadth-First Search</option>
+        <option value="Deapth-First Search">Depth-First Search</option>
+        <option value="Dijkstras">Dijkstras</option>
+        <option value="Greedy Best-First Search">
+          Greedy Best-First Search
+        </option>
+      </select>
+      <button type="button" id="start-button" onclick="startSearch()">
+        Start
+      </button>
+    </section>
+    <section class="content">
+      <div id="grid">
+        <script>
+          // On page load, use the initializeBoard function from the js file
+          // This creates the board and should also make all of the node objects that will be used later
+          window.addEventListener("load", initializeBoard());
+        </script>
+      </div>
+    </section>
+  </body>
+</html>
