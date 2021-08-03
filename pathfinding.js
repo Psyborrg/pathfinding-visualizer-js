@@ -9,7 +9,6 @@ let finishX = 15;
 let finishY = 15;
 var nodesToVisit = [];
 let delay = 25;
-let density = 60;
 
 function initializeBoard() {
   // LOOP + ADD CELLS
@@ -22,7 +21,6 @@ function initializeBoard() {
       let cell = document.createElement("div");
       cell.className = "cell";
       var id = row.toString() + "," + col.toString();
-      //   cell.innerHTML = id;
       cell.setAttribute("id", id);
 
       // Set background colors based on if they are the start, finish, or neither
@@ -117,6 +115,8 @@ function startSearch() {
     initializeDepthFirstSearch();
   } else if (algorithm === "Greedy Best-First Search") {
     initializeGreedyBestFirstSearch();
+  } else if (algorithm === "A*") {
+    initializeAStar();
   }
   // TO DO:
   // INCLUDE THE ABILITY TO RUN OTHER ALGORITHMS
@@ -218,7 +218,7 @@ function backtrack(node) {
   if (node.prevNode == node) {
     return;
   } else {
-    backtrack(node.prevNode);
+    setTimeout(backtrack, delay, node.prevNode);
   }
 }
 
@@ -262,7 +262,8 @@ function breadthFirstSearch() {
   setTimeout(breadthFirstSearch, delay);
 }
 
-function checkNeighbors(node) {
+function checkNeighbors(currNode) {
+  // List of move, right -> left etc
   let moves = [
     [1, 0],
     [-1, 0],
@@ -273,8 +274,8 @@ function checkNeighbors(node) {
   // For each direction, add the node to the queue of nodes to visit
   for (let i = 0; i < moves.length; i++) {
     // Check that the adjacent node is inside the bounds
-    newRow = node.row + moves[i][0];
-    newCol = node.col + moves[i][1];
+    newRow = currNode.row + moves[i][0];
+    newCol = currNode.col + moves[i][1];
 
     // If the new row or column is outside the bounds, skip it
     if (newRow < 0 || newRow >= numRows) {
@@ -287,7 +288,7 @@ function checkNeighbors(node) {
     // Get the adjacent Node
     adjNode = grid[newRow][newCol];
 
-    // If the adjacent node is a wall or has been visited before, dont add it to the list
+    // If the adjacent node is a wall dont update its heuristics
     if (adjNode.isPassable == false) {
       console.log("found a wall");
       continue;
@@ -298,25 +299,22 @@ function checkNeighbors(node) {
       adjNode.greedHeuristic = heuristic;
 
       //  If this is a better path than before, update the distance and previous Node
-      newDist = node.distance + 1;
+      newDist = currNode.distance + adjNode.weight;
       if (adjNode.distance > newDist) {
-        adjNode.distance = node.distance + node.weight;
-        adjNode.prevNode = node;
+        adjNode.distance = newDist;
+        adjNode.prevNode = currNode;
       }
     }
 
-    // If it has already been visited, dont add it to the list
+    // If the node as already been visited, dont add it back onto the list
     if (adjNode.visited == true) {
       console.log("already looked at this node");
       continue;
     } else {
-      let adjCellid = adjNode.row.toString() + "," + adjNode.col.toString();
-      let adjCell = document.getElementById(adjCellid);
-      adjCell.style.backgroundColor = "orange";
-      // Otherwise add it to the queue and set its prevNode to the currNode
-      adjNode.prevNode = node;
+      // If the node has not been visited, add it to the list and change color to mark as on the list
+      changeCellColor(adjNode, "orange");
 
-      // add the adjacent node if it isnt already in the queue
+      // add the adjacent node if it isnt already in the list
       if (!nodesToVisit.includes(adjNode)) {
         nodesToVisit.push(adjNode);
       }
@@ -409,21 +407,46 @@ function greedyBestFirstSearch() {
   setTimeout(greedyBestFirstSearch, delay);
 }
 
-// Finds the shortest path by backtracking through the previous nodes
-function backtrack(node) {
+function initializeAStar() {
+  startNode = grid[startY][startX];
+  nodesToVisit.push(startNode);
+  AStar();
+}
+
+function AStar() {
+  // Sort the array of nodes to visit
+  nodesToVisit.sort((a, b) =>
+    a.distance + a.greedHeuristic > b.distance + b.greedHeuristic ? 1 : -1
+  );
+
+  // Get the current node
+  let currNode = nodesToVisit.shift();
   // Get the proper cell in the html
-  let cellid = node.row.toString() + "," + node.col.toString();
-  let cell = document.getElementById(cellid);
+  let currCellid = currNode.row.toString() + "," + currNode.col.toString();
+  let currCell = document.getElementById(currCellid);
 
-  // Try to add amimations to the shortest path
-  cell.classList.remove("cell-visited");
-  cell.classList.add("cell-shortestpath");
-
-  if (node.prevNode == node) {
+  // If the node popped has a distance of infinity, return because there is no path
+  if (currNode.distance == Number.POSITIVE_INFINITY) {
+    console.log("No path available");
     return;
-  } else {
-    backtrack(node.prevNode);
   }
+  // If the current node is the finish, then backtrack for the shortest path
+  if (currNode.isFinish == true) {
+    console.log("Found the shortest path, distance: " + currNode.distance);
+    backtrack(currNode);
+    return;
+  }
+
+  // change the distance values for the neighbors
+  checkNeighbors(currNode);
+  // Set the current node to have been visited
+  currNode.visited = true;
+
+  // Try to add animations to the visit, including color change
+  currCell.classList.add("cell-visited");
+
+  // Run the recursion again after a delay
+  setTimeout(AStar, delay);
 }
 
 // Functions that allow for the random generation of walls

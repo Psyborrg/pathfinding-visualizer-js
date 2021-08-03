@@ -14,54 +14,29 @@ main {
     var(--first-bg-color),
     var(--second-bg-color)
   );
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.glass {
-  background: var(--main-bg-color);
-  min-height: 80vh;
-  width: 60%;
-  background: rgba(201, 212, 214, 0.7);
-  border: white;
-  border-style: solid;
-  border-radius: 2rem;
+#header {
+  text-align: center;
+  font-size: 100px;
+  padding-top: 50px;
 }
 
-nav {
-  flex: 1;
+.projects {
+  padding-top: 200px;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-evenly;
-  text-align: center;
-
-  background: #11538c;
-  border-bottom: solid white;
-  border-top-left-radius: 2rem;
-  border-top-right-radius: 2rem;
+  /* align-items: ; */
 }
 
-nav li {
-  list-style: none;
-  font-size: 2vw;
-  display: inline;
-  margin: 2rem;
+.project {
+  background: var(--main-bg-color);
+  border: white;
+  border-style: solid;
+  width: 300px;
 }
 
-a {
-  text-decoration: none;
-  color: white;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-#content {
-  justify-content: center;
-}
 #grid {
   display: grid;
   grid-template-columns: repeat(40, 20px);

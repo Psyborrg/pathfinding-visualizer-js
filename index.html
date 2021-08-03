@@ -19,33 +19,34 @@
         Good for mobile responsiveness -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Essentially imports the css stylesheet from style.css -->
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <main>
-      <section class="glass">
-        <div class="dashboard">
-          <!-- The navigation bar -->
-          <nav>
-            <!-- List of navigation links -->
-            <ul>
-              <!-- Link to the home page -->
-              <li><a href="./index.html">Home</a></li>
-              <!-- Link to the about page -->
-              <li><a href="./about.html">About</a></li>
-              <!-- Link to the projects page -->
-              <li>
-                <a href="./projects.html">Projects</a>
-              </li>
-              <!-- Link to contact the dev, ie. me -->
-              <li>
-                <a href="./contact.html">Contact</a>
-              </li>
-              <li>
-                <a href="./pathfinding.html">Pathfinding</a>
-              </li>
-            </ul>
-          </nav>
+      <section class="navbar"></section>
+      <div id="header"><header>Projects</header></div>
+      <section class="projects">
+        <div class="project" id="bakabot">
+          <img src="./Discord-Logo-Color.png" alt="Discord Logo" />
+          <div class="project-description">
+            Discord bot created using discord.py made primarily for personal
+            use.
+          </div>
+          <div class="link">
+            <a href="https://github.com/Psyborrg/Baka-Bot">githublink</a>
+          </div>
+        </div>
+        <div class="project" id="pathfinding-visualizer">
+          <img src="pathfinding.jpg" alt="Pathfinding Visualizer Icon" />
+          <div class="project-description">
+            Grid based program created primarily with JavaScript to allow for
+            the easy visulization of different pathfinding algorithms.
+          </div>
+          <div class="link">
+            <a href="https://github.com/Psyborrg/pathfinding-visualizer-js"
+              >githublink</a
+            >
+          </div>
         </div>
       </section>
     </main>
