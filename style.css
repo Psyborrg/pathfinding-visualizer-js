@@ -16,10 +16,18 @@ main {
   );
 }
 
-#header {
+.header {
   text-align: center;
   font-size: 100px;
   padding-top: 50px;
+}
+
+.project-page-header {
+  text-align: center;
+}
+
+.control-bar {
+  text-align: center;
 }
 
 .projects {
@@ -39,7 +47,7 @@ main {
 
 #grid {
   display: grid;
-  grid-template-columns: repeat(40, 20px);
+  grid-template-columns: repeat(80, 20px);
   grid-template-rows: repeat(auto-fill, 20px);
   align-items: center;
   justify-content: center;

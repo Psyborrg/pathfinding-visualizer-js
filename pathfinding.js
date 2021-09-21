@@ -1,7 +1,7 @@
 //Global Variables
 let clicked = false;
 let numRows = 40;
-let numCols = 40;
+let numCols = 80;
 let grid = [];
 let startX = 10;
 let startY = 5;
@@ -449,7 +449,14 @@ function AStar() {
   setTimeout(AStar, delay);
 }
 
-// Functions that allow for the random generation of walls
+// Recursive Division Algorithm for wall generation
+// How to?
+// Choose an area to be divided, at the start this will be the whole board
+// Divide the chosen area by constructing a line through it at some random point
+// Choose a location in the wall and build a single gap at random
+// If the divided portions are big enough (height and width greater than 1) add the new areas to the stack
+// Stop when there are no more areas to divide
+
 function generateWalls() {
   resetBoard();
   addOuterWalls();
@@ -505,12 +512,11 @@ function addHWall(minX, maxX, y) {
   var hole = Math.floor(randomNumber(minX, maxX) / 2) * 2 + 1;
 
   for (var i = minX; i <= maxX; i++) {
+    node = grid[y][i];
     if (i == hole) {
-      node = grid[y][i];
       node.isPassable = true;
       changeCellColor(node, "white");
     } else {
-      node = grid[y][i];
       node.isPassable = false;
       changeCellColor(node, "gray");
     }
@@ -521,12 +527,11 @@ function addVWall(minY, maxY, x) {
   var hole = Math.floor(randomNumber(minY, maxY) / 2) * 2 + 1;
 
   for (var i = minY; i <= maxY; i++) {
+    node = grid[i][x];
     if (i == hole) {
-      node = grid[i][x];
       node.isPassable = true;
       changeCellColor(node, "white");
     } else {
-      node = grid[i][x];
       node.isPassable = false;
       changeCellColor(node, "gray");
     }
@@ -536,73 +541,6 @@ function addVWall(minY, maxY, x) {
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
-// Recursive Division Algorithm for wall generation
-// How to?
-// Choose an area to be divided, at the start this will be the whole board
-// Divide the chosen area by constructing a line through it at some random point
-// Choose a location in the wall and build a single gap at random
-// If the divided portions are big enough (height and width greater than 1) add the new arreas to the stack
-// Stop when there are no more areas to divide
-
-// function recursiveDivision(startRow, endRow, startCol, endCol) {
-//   console.log("Started dividing");
-
-//   // Calculate dimensions of the region
-//   let height = endRow - startRow;
-//   let width = endCol - startCol;
-
-//   // Check for base case, if area = 1
-//   if (height <= 1 && width <= 1) {
-//     console.log("Finished constructing maze");
-//     return;
-//   }
-
-//   // Divide the region in two
-//   orientationValue = Math.floor(Math.random() * (width + height));
-//   console.log(orientationValue);
-
-//   // If the random value is greater than the width, divide horizontally
-//   if (orientationValue > width) {
-//     wallIndex = Math.floor(Math.random() * width);
-//     // console.log("supposed to be horizontal");
-//     for (i = startCol; i < endCol; i++) {
-//       node = grid[startRow + wallIndex][i];
-//       node.isPassable = false;
-//       changeCellColor(node, "gray");
-//     }
-//     removeRandomWall(wallIndex, wallIndex, startCol, endCol);
-//     recursiveDivision();
-//   } else {
-//     // Vertical wall
-//     wallIndex = Math.floor(Math.random() * height);
-//     for (i = startRow; i < endRow; i++) {
-//       node = grid[i][startCol + wallIndex];
-//       node.isPassable = false;
-//       changeCellColor(node, "gray");
-//     }
-//     removeRandomWall(startRow, endRow, wallIndex, wallIndex);
-//     recursiveDivision();
-//   }
-// }
-
-// function removeRandomWall(startRow, endRow, startCol, endCol) {
-//   let height = endRow - startRow;
-//   let width = endCol - startCol;
-//   // If vertical
-//   if (endRow > startRow) {
-//     wallIndex = Math.floor(Math.random() * height);
-//     node = grid[wallIndex][startCol];
-//     node.isPassable = true;
-//     changeCellColor(node, "white");
-//   } else {
-//     // If horizontal
-//     wallIndex = Math.floor(Math.random() * width);
-//     node = grid[startRow][wallIndex];
-//     node.isPassable = true;
-//     changeCellColor(node, "white");
-//   }
-// }
 
 // 1. Collect all the cells in the maze into a single region.
 // 2. Split the region into two, using the following process:
