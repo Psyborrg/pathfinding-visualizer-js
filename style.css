@@ -7,42 +7,12 @@
   --secondary-text-color: rgb(29, 74, 123);
 }
 
-main {
-  min-height: 100vh;
-  background: linear-gradient(
-    to right top,
-    var(--first-bg-color),
-    var(--second-bg-color)
-  );
-}
-
 .header {
-  text-align: center;
-  font-size: 100px;
-  padding-top: 50px;
-}
-
-.project-page-header {
   text-align: center;
 }
 
 .control-bar {
   text-align: center;
-}
-
-.projects {
-  padding-top: 200px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  /* align-items: ; */
-}
-
-.project {
-  background: var(--main-bg-color);
-  border: white;
-  border-style: solid;
-  width: 300px;
 }
 
 #grid {
@@ -111,12 +81,4 @@ main {
     transform: scale(1);
     background-color: rgb(255, 254, 106);
   }
-}
-
-.cell .cell-start {
-  color: green;
-}
-
-.cell .cell-finish {
-  color: red;
 }
